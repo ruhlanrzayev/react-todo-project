@@ -12,7 +12,7 @@ This project is a fully-featured to-do list application developed with React and
 ## Screenshots:
 
 ### 1. **Home Page**
-![Home Page Screenshot](![image](https://github.com/user-attachments/assets/389259cd-9c2f-43c3-8d01-45aa4a9fdfb0))  
+![Home Page Screenshot]![image](https://github.com/user-attachments/assets/b6973059-183c-40ae-b703-7016af623b82)
 *This screenshot shows the home page of the app, where users can view all their tasks, create new ones, and manage existing tasks.*
 
 ### 2. **Dark / Light Mode Toggle**
