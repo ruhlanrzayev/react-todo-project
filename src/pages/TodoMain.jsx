@@ -18,6 +18,7 @@ function TodoMain() {
     const [sortOption, setSortOption] = useState('default');
     const [newTask, setNewTask] = useState({
         name: '',
+        description: '', // Added description field
         difficulty: '',
         priority: '',
         category: '',
@@ -25,7 +26,6 @@ function TodoMain() {
         creationDate: new Date().toISOString().split('T')[0],
         deadlineDate: ''
     });
-
     const priorityColors = {
         Low: 'bg-green-200 text-green-800',
         Medium: 'bg-yellow-200 text-yellow-800',
@@ -66,6 +66,7 @@ function TodoMain() {
         setIsCreateModalOpen(false);
         setNewTask({
             name: '',
+            description: '', // Reset description
             difficulty: '',
             priority: '',
             category: '',
@@ -76,7 +77,7 @@ function TodoMain() {
     };
 
     const addTask = () => {
-        const { name, difficulty, priority, category, deadlineDate } = newTask;
+        const { name, description, difficulty, priority, category, deadlineDate } = newTask;
         
         if (!name || !difficulty || !priority || !category || !deadlineDate) {
             alert('Please fill all required fields!');
@@ -86,6 +87,7 @@ function TodoMain() {
         const newTaskObj = {
             id: taskCount + 1,
             name,
+            description, // Added description to task object
             difficulty,
             priority,
             category,
@@ -257,7 +259,7 @@ function TodoMain() {
                                             onClick={() => showTaskDetails(task.id)}
                                             className={`task-name cursor-pointer ${task.status === 'completed' ? 'line-through' : ''}`}
                                         >
-                                            {task.id}. {task.name}
+                                            {task.name}
                                         </span>
                                     </div>
                                     <div className="flex items-center space-x-2">
@@ -305,8 +307,15 @@ function TodoMain() {
                         {selectedTask && (
                             <div className="bg-[#eeeaea] dark:bg-[#242424] p-6 rounded-lg ">
                                 <h2 className="text-2xl font-bold mb-4">
-                                    {selectedTask.id}. {selectedTask.name}
+                                    {selectedTask.name}
                                 </h2>
+                                {/* Added description section */}
+                                {selectedTask.description && (
+                                    <div className="mb-4 bg-gray-100 dark:bg-gray-700 p-3 rounded-md">
+                                        <strong className="block mb-2">Description:</strong>
+                                        <p>{selectedTask.description}</p>
+                                    </div>
+                                )}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <strong>Difficulty:</strong> {selectedTask.difficulty}
@@ -360,6 +369,15 @@ function TodoMain() {
                                 placeholder="Task Name *" 
                                 required 
                             />
+
+                            <textarea 
+                                id="description"
+                                value={newTask.description}
+                                onChange={handleInputChange}
+                                className="border p-2 w-full text-white" 
+                                placeholder="Task Description (optional)"
+                                rows="3"
+                            ></textarea>
                             
                             <select 
                                 id="difficulty" 
