@@ -14,6 +14,8 @@ function TodoMain() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
     const [selectedTask, setSelectedTask] = useState(null);
+    const [hoveredTaskId, setHoveredTaskId] = useState(null);
+    const [sortOption, setSortOption] = useState('default');
     const [newTask, setNewTask] = useState({
         name: '',
         difficulty: '',
@@ -23,6 +25,18 @@ function TodoMain() {
         creationDate: new Date().toISOString().split('T')[0],
         deadlineDate: ''
     });
+
+    const priorityColors = {
+        Low: 'bg-green-200 text-green-800',
+        Medium: 'bg-yellow-200 text-yellow-800',
+        High: 'bg-red-200 text-red-800'
+    };
+
+    const priorityOrder = {
+        Low: 1,
+        Medium: 2,
+        High: 3
+    };
 
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
@@ -151,6 +165,21 @@ function TodoMain() {
         }));
     };
 
+    const sortTasks = (tasksToSort) => {
+        switch(sortOption) {
+            case 'deadline-asc':
+                return [...tasksToSort].sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate));
+            case 'deadline-desc':
+                return [...tasksToSort].sort((a, b) => new Date(b.deadlineDate) - new Date(a.deadlineDate));
+            case 'priority-asc':
+                return [...tasksToSort].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+            case 'priority-desc':
+                return [...tasksToSort].sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+            default:
+                return tasksToSort;
+        }
+    };
+
     return (
         <div className="min-h-screen w-screen relative flex items-center justify-center flex-col gap-3 text-[#242424] dark:text-amber-50 bg-[#eeeaea] dark:bg-[#242424]">
             <div className="change-theme flex items-center justify-between">
@@ -171,7 +200,7 @@ function TodoMain() {
                 {!isDetailsViewOpen ? (
                     <div id="taskListView">
                         <div className="container">
-                            <div className="top-content p-3 sm:w-[800px]">
+                            <div className="top-content p-3 sm:w-[700px]">
                                 <div className="top-text flex items-center justify-between w-[280px] sm:w-full my-4">
                                     <h1 className="text-amber-50 font-bold text-[1.5em] dark:text-[#242424]">My Tasks</h1>
                                     <button 
@@ -186,13 +215,28 @@ function TodoMain() {
                                     <span className="bg-green-300 text-green-600 p-1 rounded-[5px] m-1">Success: {successCount}</span>
                                     <span className="bg-orange-300 text-orange-600 p-1 rounded-[5px] m-1">Pending: {pendingCount}</span>
                                 </div>
+                                <div className="filter-section flex items-center justify-center mt-4">
+                                    <div className="flex items-center space-x-2">
+                                        <select 
+                                            value={sortOption}
+                                            onChange={(e) => setSortOption(e.target.value)}
+                                            className="border p-2 rounded-md w-full bg-[#eeeaea] dark:bg-[#242424]"
+                                        >
+                                            <option value="default">Default Sorting</option>
+                                            <option value="deadline-asc">Deadline: Nearest First</option>
+                                            <option value="deadline-desc">Deadline: Furthest First</option>
+                                            <option value="priority-asc">Priority: Low to High</option>
+                                            <option value="priority-desc">Priority: High to Low</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="taskContainer p-2">
-                            {tasks.map(task => (
+                            {sortTasks(tasks).map(task => (
                                 <div 
                                     key={task.id} 
-                                  className="flex justify-between w-full sm:w-[700px] m-auto items-center bg-[#eeeaea] dark:bg-[#242424] p-3 rounded-md my-3 flex-wrap"
+                                    className="flex justify-between w-full sm:w-[700px] m-auto items-center bg-[#eeeaea] dark:bg-[#242424] p-3 rounded-md my-3 flex-wrap relative"
                                 >
                                     <div className="flex items-center gap-3 w-full sm:w-auto">
                                         <input 
@@ -216,8 +260,35 @@ function TodoMain() {
                                             {task.id}. {task.name}
                                         </span>
                                     </div>
-                                    <div className="task-dates text-sm text-gray-600 hidden sm:block">
-                                        Deadline: {task.deadlineDate}
+                                    <div className="flex items-center space-x-2">
+                                        <div className="task-dates text-sm text-gray-600 hidden sm:block">
+                                            Deadline: {task.deadlineDate}
+                                        </div>
+                                        <span 
+                                            className={`px-2 py-1 rounded-md text-xs ${priorityColors[task.priority] || 'bg-gray-200 text-gray-800'}`}
+                                        >
+                                            {task.priority}
+                                        </span>
+                                        
+                                        <div 
+                                            className="relative ml-2 hidden sm:block"
+                                            onMouseEnter={() => setHoveredTaskId(task.id)}
+                                            onMouseLeave={() => setHoveredTaskId(null)}
+                                        >
+                                            <i className="fas fa-tags cursor-pointer text-gray-500 hover:text-gray-700"></i>
+                                            
+                                            {hoveredTaskId === task.id && (
+                                                <div 
+                                                    className="absolute z-10 top-full left-1/2 transform -translate-x-1/2 mt-2 p-2 rounded-md shadow-lg text-xs w-max
+                                                    bg-[#242424] text-white 
+                                                    dark:bg-[#eeeaea] dark:text-[#242424]"
+                                                >
+                                                    {task.tags && task.tags.length > 0 
+                                                        ? task.tags.join(', ') 
+                                                        : 'No tags'}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -241,7 +312,12 @@ function TodoMain() {
                                         <strong>Difficulty:</strong> {selectedTask.difficulty}
                                     </div>
                                     <div>
-                                        <strong>Priority:</strong> {selectedTask.priority}
+                                        <strong>Priority:</strong> 
+                                        {selectedTask.priority === 'Low' ? (
+                                            <span className="bg-green-200 text-green-800 mx-2 p-1 rounded-[5px]">Low</span>
+                                        ) : selectedTask.priority === 'Medium' ? (
+                                            <span className="bg-yellow-200 text-yellow-800 mx-2 p-1 rounded-[5px]">Medium</span>
+                                        ) : <span className="bg-red-200 text-red-800 mx-2 p-1 rounded-[5px]">Hard</span>}
                                     </div>
                                     <div>
                                         <strong>Category:</strong> {selectedTask.category}
@@ -258,9 +334,9 @@ function TodoMain() {
                                     <div>
                                         <strong>Status:</strong> 
                                         {selectedTask.status === 'pending' ? (
-                                            <span className="bg-orange-300 text-orange-600 p-1 rounded-[5px]">Pending</span>
+                                            <span className="bg-orange-300 text-orange-600 mx-2 p-1 rounded-[5px]">Pending</span>
                                         ) : (
-                                            <span className="bg-green-300 text-green-600 p-1 rounded-[5px]">Success</span>
+                                            <span className="bg-green-300 text-green-600 mx-2 p-1 rounded-[5px]">Success</span>
                                         )}
                                     </div>
                                 </div>
