@@ -12,23 +12,23 @@ This project is a fully-featured to-do list application developed with React and
 ## Screenshots:
 
 ### 1. **Home Page**
-![Home Page Screenshot]![image](https://github.com/user-attachments/assets/b6973059-183c-40ae-b703-7016af623b82)
+![Home Page](https://github.com/user-attachments/assets/b6973059-183c-40ae-b703-7016af623b82)
 *This screenshot shows the home page of the app, where users can view all their tasks, create new ones, and manage existing tasks.*
 
 ### 2. **Dark / Light Mode Toggle**
-![Dark/Light Mode Screenshot](link_to_screenshot2)  
+![Light / Dark Mode](https://github.com/user-attachments/assets/8733fbf7-9b7c-4afe-81e1-3eb4bb9de727)
 *This screenshot demonstrates the theme toggle feature, allowing users to switch between light and dark modes for a more personalized and comfortable experience.*
 
 ### 3. **Todo Container**
-![Todo Container Screenshot](link_to_screenshot3)  
+![To Do Container](https://github.com/user-attachments/assets/36227bd1-94c0-42cb-a4cc-c11ffba1b3d1)
 *This screenshot highlights the main task container where all tasks are displayed. Tasks can be filtered by status (All, Active, Completed), giving users a clear view of their to-do list.*
 
 ### 4. **Create Task Module**
-![Create Task Module Screenshot](link_to_screenshot4)  
+![Create Task Module](https://github.com/user-attachments/assets/3a9f8f3f-1ab0-43ec-b44f-d5da5aad4a3e)
 *This screenshot shows the task creation module where users can add new tasks to their to-do list. The user-friendly interface makes adding tasks simple and intuitive.*
 
 ### 5. **Task Details**
-![Task Details Screenshot](link_to_screenshot5)  
+![Task Details](https://github.com/user-attachments/assets/77f0a2ee-65c5-481d-88a7-2404b15b5510)
 *This screenshot showcases the task details view, where users can edit or view specific details about each task. It provides a deeper look into individual tasks, allowing for better management.*
 
 ## Built With:
