@@ -20,15 +20,15 @@ This project is a fully-featured to-do list application developed with React and
 *This screenshot demonstrates the theme toggle feature, allowing users to switch between light and dark modes for a more personalized and comfortable experience.*
 
 ### 3. **Todo Container**
-![To Do Container](https://github.com/user-attachments/assets/36227bd1-94c0-42cb-a4cc-c11ffba1b3d1)
+![To Do Container](https://github.com/user-attachments/assets/cfc04e49-140e-4d46-8a65-93f9ac46e980)
 *This screenshot highlights the main task container where all tasks are displayed. Tasks can be filtered by status (All, Active, Completed), giving users a clear view of their to-do list.*
 
 ### 4. **Create Task Module**
-![Create Task Module](https://github.com/user-attachments/assets/3a9f8f3f-1ab0-43ec-b44f-d5da5aad4a3e)
+![Create Task Module](https://github.com/user-attachments/assets/ea03c5fd-6467-4570-9f4c-5dca4354e30b)
 *This screenshot shows the task creation module where users can add new tasks to their to-do list. The user-friendly interface makes adding tasks simple and intuitive.*
 
 ### 5. **Task Details**
-![Task Details](https://github.com/user-attachments/assets/77f0a2ee-65c5-481d-88a7-2404b15b5510)
+![Task Details](https://github.com/user-attachments/assets/5de5fc89-b63e-48fd-8777-9084aa8f0f9c)
 *This screenshot showcases the task details view, where users can edit or view specific details about each task. It provides a deeper look into individual tasks, allowing for better management.*
 
 ## Built With:
